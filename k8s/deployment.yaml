@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: irrigation-app
+  namespace: irrigation
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: irrigation
+
+  template:
+    metadata:
+      labels:
+        app: irrigation
+
+    spec:
+      containers:
+      - name: irrigation
+        image: nginx:latest
+        ports:
+        - containerPort: 80
