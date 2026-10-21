@@ -1,0 +1,27 @@
+name: CIS Kubernetes Security Scan
+
+on:
+  push:
+    paths:
+      - "k8s/**"
+      - ".github/workflows/cis-security.yml"
+  pull_request:
+    paths:
+      - "k8s/**"
+
+jobs:
+  security-scan:
+    name: Scan Kubernetes manifests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Kubescape
+        uses: kubescape/setup-kubescape@v1
+        with:
+          version: latest
+
+      - name: Scan Kubernetes manifests
+        run: kubescape scan config k8s/
