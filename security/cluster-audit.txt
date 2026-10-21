@@ -1,0 +1,64 @@
+AI Irrigation GitOps - Read-only audit
+
+=== Current context ===
+minikube
+
+
+=== Kubernetes version ===
+Client Version: v1.37.0
+Kustomize Version: v5.8.1
+Server Version: v1.37.0
+
+
+=== Nodes ===
+NAME       STATUS   ROLES           AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                              CONTAINER-RUNTIME
+minikube   Ready    control-plane   79m   v1.37.0   192.168.49.2   <none>        Debian GNU/Linux 12 (bookworm)   6.18.33.2-microsoft-standard-WSL2 (amd64)   containerd://2.3.4
+
+
+=== Namespaces ===
+NAME              STATUS   AGE
+argocd            Active   77m
+default           Active   79m
+irrigation        Active   47m
+kube-node-lease   Active   79m
+kube-public       Active   79m
+kube-system       Active   79m
+
+
+=== Argo CD applications ===
+NAME             SYNC STATUS   HEALTH STATUS
+irrigation-app   Synced        Healthy
+
+
+=== Deployments ===
+NAMESPACE     NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+argocd        argocd-applicationset-controller   0/1     1            0           76m
+argocd        argocd-dex-server                  1/1     1            1           76m
+argocd        argocd-notifications-controller    1/1     1            1           76m
+argocd        argocd-redis                       1/1     1            1           76m
+argocd        argocd-repo-server                 1/1     1            1           76m
+argocd        argocd-server                      1/1     1            1           76m
+irrigation    irrigation-app                     2/2     2            2           47m
+kube-system   coredns                            1/1     1            1           79m
+
+
+=== Network policies ===
+NAMESPACE   NAME                                              POD-SELECTOR                                              AGE
+argocd      argocd-application-controller-network-policy      app.kubernetes.io/name=argocd-application-controller      76m
+argocd      argocd-applicationset-controller-network-policy   app.kubernetes.io/name=argocd-applicationset-controller   76m
+argocd      argocd-dex-server-network-policy                  app.kubernetes.io/name=argocd-dex-server                  76m
+argocd      argocd-notifications-controller-network-policy    app.kubernetes.io/name=argocd-notifications-controller    76m
+argocd      argocd-redis-network-policy                       app.kubernetes.io/name=argocd-redis                       76m
+argocd      argocd-repo-server-network-policy                 app.kubernetes.io/name=argocd-repo-server                 76m
+argocd      argocd-server-network-policy                      app.kubernetes.io/name=argocd-server                      76m
+
+
+=== Pod security labels ===
+NAME              STATUS   AGE   LABELS
+argocd            Active   77m   kubernetes.io/metadata.name=argocd
+default           Active   79m   kubernetes.io/metadata.name=default
+irrigation        Active   47m   kubernetes.io/metadata.name=irrigation
+kube-node-lease   Active   79m   kubernetes.io/metadata.name=kube-node-lease
+kube-public       Active   79m   kubernetes.io/metadata.name=kube-public
+kube-system       Active   79m   kubernetes.io/metadata.name=kube-system
+
