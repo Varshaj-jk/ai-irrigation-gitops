@@ -11,17 +11,19 @@ on:
 
 jobs:
   security-scan:
-    name: Scan Kubernetes manifests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Kubescape
-        uses: kubescape/setup-kubescape@v1
-        with:
-          version: latest
-
       - name: Scan Kubernetes manifests
-        run: kubescape scan config k8s/
+        uses: kubescape/github-action@main
+        with:
+          files: "k8s/*.yaml"
+          frameworks: "cis-v1.23-t1.0.1"
+          format: json
+          outputFile: kubescape-results
+          severityThreshold: high
