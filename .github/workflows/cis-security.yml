@@ -2,12 +2,8 @@ name: CIS Kubernetes Security Scan
 
 on:
   push:
-    paths:
-      - "k8s/**"
-      - ".github/workflows/cis-security.yml"
+    branches: [main]
   pull_request:
-    paths:
-      - "k8s/**"
 
 jobs:
   security-scan:
@@ -22,8 +18,7 @@ jobs:
       - name: Scan Kubernetes manifests
         uses: kubescape/github-action@main
         with:
-          files: "k8s/*.yaml"
+          files: "k8s/"
           frameworks: "cis-v1.23-t1.0.1"
           format: json
-          outputFile: kubescape-results
-          severityThreshold: high
+          outputFile: results
