@@ -1,0 +1,84 @@
+warning: in the working copy of 'security/scripts/audit.ps1', LF will be replaced by CRLF the next time Git touches it
+[1mdiff --git a/security/policies/pod-security-standards.yaml b/security/policies/pod-security-standards.yaml[m
+[1mindex f992b0a..8f279f2 100644[m
+[1m--- a/security/policies/pod-security-standards.yaml[m
+[1m+++ b/security/policies/pod-security-standards.yaml[m
+[36m@@ -4,5 +4,6 @@[m [mkind: Namespace[m
+ metadata:[m
+   name: irrigation[m
+   labels:[m
+[32m+[m[32m    pod-security.kubernetes.io/enforce: restricted[m
+     pod-security.kubernetes.io/audit: restricted[m
+     pod-security.kubernetes.io/warn: restricted[m
+\ No newline at end of file[m
+[1mdiff --git a/security/scripts/audit.ps1 b/security/scripts/audit.ps1[m
+[1mindex 428e043..fffbe04 100644[m
+[1m--- a/security/scripts/audit.ps1[m
+[1m+++ b/security/scripts/audit.ps1[m
+[36m@@ -1,24 +1,52 @@[m
+[32m+[m
+ $ErrorActionPreference = "Continue"[m
+[31m-$report = ".\security\cluster-audit.txt"[m
+ [m
+[31m-"AI Irrigation GitOps - Read-only audit" |[m
+[32m+[m[32mNew-Item -ItemType Directory -Force .\security\reports |[m
+[32m+[m[32m    Out-Null[m
+[32m+[m
+[32m+[m[32m$report = ".\security\reports\security-audit.txt"[m
+[32m+[m
+[32m+[m[32m"AI Irrigation GitOps - Read-only Security Audit" |[m
+     Set-Content $report[m
+ [m
+[31m-function Add-Section {[m
+[31m-    param([string]$Title, [string]$Command)[m
+[32m+[m[32mfunction Add-AuditSection {[m
+[32m+[m[32m    param([m
+[32m+[m[32m        [string]$Title,[m
+[32m+[m[32m        [string]$Command[m
+[32m+[m[32m    )[m
+[32m+[m
+     "`r`n=== $Title ===" | Add-Content $report[m
+[32m+[m
+     Invoke-Expression $Command 2>&1 |[m
+         Out-String |[m
+         Add-Content $report[m
+ }[m
+ [m
+[31m-Add-Section "Current context" "kubectl config current-context"[m
+[31m-Add-Section "Kubernetes version" "kubectl version"[m
+[31m-Add-Section "Nodes" "kubectl get nodes -o wide"[m
+[31m-Add-Section "Namespaces" "kubectl get namespaces"[m
+[31m-Add-Section "Argo CD applications" "kubectl get applications -n argocd"[m
+[31m-Add-Section "Deployments" "kubectl get deployments -A"[m
+[31m-Add-Section "Network policies" "kubectl get networkpolicies -A"[m
+[31m-Add-Section "Pod security labels" "kubectl get namespaces --show-labels"[m
+[32m+[m[32mAdd-AuditSection "Current Context" `[m
+[32m+[m[32m    "kubectl config current-context"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Kubernetes Version" `[m
+[32m+[m[32m    "kubectl version"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Nodes" `[m
+[32m+[m[32m    "kubectl get nodes -o wide"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Namespaces" `[m
+[32m+[m[32m    "kubectl get namespaces --show-labels"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Argo CD Applications" `[m
+[32m+[m[32m    "kubectl get applications -n argocd"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Deployments" `[m
+[32m+[m[32m    "kubectl get deployments -A"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Pods" `[m
+[32m+[m[32m    "kubectl get pods -A"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Network Policies" `[m
+[32m+[m[32m    "kubectl get networkpolicies -A"[m
+[32m+[m
+[32m+[m[32mAdd-AuditSection "Argo CD RBAC ConfigMap" `[m
+[32m+[m[32m    "kubectl get configmap argocd-rbac-cm -n argocd -o yaml"[m
+ [m
+[31m-Write-Host "Audit report saved to $report"[m
+[32m+[m[32mWrite-Host "Audit report saved to $report"[m
+\ No newline at end of file[m

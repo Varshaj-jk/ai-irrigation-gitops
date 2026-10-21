@@ -1,0 +1,92 @@
+AI Irrigation GitOps - Read-only Security Audit
+
+=== Current Context ===
+minikube
+
+
+=== Kubernetes Version ===
+Client Version: v1.36.1
+Kustomize Version: v5.8.1
+Server Version: v1.37.0
+
+
+=== Nodes ===
+NAME       STATUS   ROLES           AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                              CONTAINER-RUNTIME
+minikube   Ready    control-plane   96m   v1.37.0   192.168.49.2   <none>        Debian GNU/Linux 12 (bookworm)   6.18.33.2-microsoft-standard-WSL2 (amd64)   containerd://2.3.4
+
+
+=== Namespaces ===
+NAME              STATUS   AGE   LABELS
+argocd            Active   93m   kubernetes.io/metadata.name=argocd
+default           Active   96m   kubernetes.io/metadata.name=default
+irrigation        Active   64m   kubernetes.io/metadata.name=irrigation
+kube-node-lease   Active   96m   kubernetes.io/metadata.name=kube-node-lease
+kube-public       Active   96m   kubernetes.io/metadata.name=kube-public
+kube-system       Active   96m   kubernetes.io/metadata.name=kube-system
+
+
+=== Argo CD Applications ===
+NAME             SYNC STATUS   HEALTH STATUS
+irrigation-app   Synced        Healthy
+
+
+=== Deployments ===
+NAMESPACE     NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
+argocd        argocd-applicationset-controller   1/1     1            1           92m
+argocd        argocd-dex-server                  1/1     1            1           92m
+argocd        argocd-notifications-controller    1/1     1            1           92m
+argocd        argocd-redis                       1/1     1            1           92m
+argocd        argocd-repo-server                 1/1     1            1           92m
+argocd        argocd-server                      1/1     1            1           92m
+irrigation    irrigation-app                     2/2     2            2           64m
+kube-system   coredns                            1/1     1            1           96m
+
+
+=== Pods ===
+NAMESPACE     NAME                                                READY   STATUS    RESTARTS         AGE
+argocd        argocd-application-controller-0                     1/1     Running   1 (75m ago)      92m
+argocd        argocd-applicationset-controller-86bcdc46cf-279jb   1/1     Running   15 (5m57s ago)   92m
+argocd        argocd-dex-server-7f65987db5-xsb6d                  1/1     Running   1 (75m ago)      92m
+argocd        argocd-notifications-controller-6885f68ddd-wp8cr    1/1     Running   1 (75m ago)      92m
+argocd        argocd-redis-7d5d5cb5b6-6ltkh                       1/1     Running   1 (75m ago)      92m
+argocd        argocd-repo-server-7f4759f94-tfzc9                  1/1     Running   1 (75m ago)      92m
+argocd        argocd-server-777cfb8fc4-6pbfj                      1/1     Running   1 (75m ago)      92m
+irrigation    irrigation-app-6cd648b854-29zwn                     1/1     Running   0                64m
+irrigation    irrigation-app-6cd648b854-qd7tf                     1/1     Running   0                64m
+kube-system   coredns-559f6c778d-mbf5n                            1/1     Running   1 (75m ago)      96m
+kube-system   etcd-minikube                                       1/1     Running   1 (75m ago)      96m
+kube-system   kindnet-6flxp                                       1/1     Running   1 (75m ago)      96m
+kube-system   kube-apiserver-minikube                             1/1     Running   1 (75m ago)      96m
+kube-system   kube-controller-manager-minikube                    1/1     Running   1 (75m ago)      96m
+kube-system   kube-proxy-j64x7                                    1/1     Running   1 (75m ago)      96m
+kube-system   kube-scheduler-minikube                             1/1     Running   1 (75m ago)      96m
+kube-system   storage-provisioner                                 1/1     Running   2 (74m ago)      96m
+
+
+=== Network Policies ===
+NAMESPACE   NAME                                              POD-SELECTOR                                              AGE
+argocd      argocd-application-controller-network-policy      app.kubernetes.io/name=argocd-application-controller      92m
+argocd      argocd-applicationset-controller-network-policy   app.kubernetes.io/name=argocd-applicationset-controller   92m
+argocd      argocd-dex-server-network-policy                  app.kubernetes.io/name=argocd-dex-server                  92m
+argocd      argocd-notifications-controller-network-policy    app.kubernetes.io/name=argocd-notifications-controller    92m
+argocd      argocd-redis-network-policy                       app.kubernetes.io/name=argocd-redis                       92m
+argocd      argocd-repo-server-network-policy                 app.kubernetes.io/name=argocd-repo-server                 92m
+argocd      argocd-server-network-policy                      app.kubernetes.io/name=argocd-server                      92m
+
+
+=== Argo CD RBAC ConfigMap ===
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"argocd-rbac-cm","app.kubernetes.io/part-of":"argocd"},"name":"argocd-rbac-cm","namespace":"argocd"}}
+  creationTimestamp: "2026-10-21T14:54:57Z"
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-rbac-cm
+  namespace: argocd
+  resourceVersion: "644"
+  uid: 9e379bed-8989-488d-89f2-cadf1679eed5
+

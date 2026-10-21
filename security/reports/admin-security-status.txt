@@ -1,0 +1,49 @@
+AI IRRIGATION - ADMIN & SECURITY STATUS
+
+=== Argo CD Applications ===
+NAME             SYNC STATUS   HEALTH STATUS
+irrigation-app   Synced        Healthy
+
+
+=== Kubernetes Nodes ===
+NAME       STATUS   ROLES           AGE    VERSION
+minikube   Ready    control-plane   107m   v1.37.0
+
+
+=== Namespaces and Pod Security Labels ===
+NAME              STATUS   AGE    LABELS
+argocd            Active   105m   kubernetes.io/metadata.name=argocd
+default           Active   107m   kubernetes.io/metadata.name=default
+irrigation        Active   75m    kubernetes.io/metadata.name=irrigation
+kube-node-lease   Active   107m   kubernetes.io/metadata.name=kube-node-lease
+kube-public       Active   107m   kubernetes.io/metadata.name=kube-public
+kube-system       Active   107m   kubernetes.io/metadata.name=kube-system
+
+
+=== Network Policies ===
+NAMESPACE   NAME                                              POD-SELECTOR                                              AGE
+argocd      argocd-application-controller-network-policy      app.kubernetes.io/name=argocd-application-controller      104m
+argocd      argocd-applicationset-controller-network-policy   app.kubernetes.io/name=argocd-applicationset-controller   104m
+argocd      argocd-dex-server-network-policy                  app.kubernetes.io/name=argocd-dex-server                  104m
+argocd      argocd-notifications-controller-network-policy    app.kubernetes.io/name=argocd-notifications-controller    104m
+argocd      argocd-redis-network-policy                       app.kubernetes.io/name=argocd-redis                       104m
+argocd      argocd-repo-server-network-policy                 app.kubernetes.io/name=argocd-repo-server                 104m
+argocd      argocd-server-network-policy                      app.kubernetes.io/name=argocd-server                      104m
+
+
+=== Argo CD RBAC Configuration ===
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"argocd-rbac-cm","app.kubernetes.io/part-of":"argocd"},"name":"argocd-rbac-cm","namespace":"argocd"}}
+  creationTimestamp: "2026-10-21T14:54:57Z"
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-rbac-cm
+  namespace: argocd
+  resourceVersion: "644"
+  uid: 9e379bed-8989-488d-89f2-cadf1679eed5
+

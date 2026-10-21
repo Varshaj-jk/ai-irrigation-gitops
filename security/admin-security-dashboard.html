@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Irrigation | Admin & Security</title>
+<style>
+body{margin:0;background:#0b1120;color:#e5edf9;font:16px Arial,sans-serif}
+header{padding:25px 5%;background:#111c30;border-bottom:1px solid #293951}
+h1{margin:0 0 8px;font-size:26px}p{color:#a7b5cc}
+main{padding:28px 5%;max-width:1100px;margin:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+.card{background:#142139;border:1px solid #2a3b56;border-radius:12px;padding:20px}
+.value{font-size:23px;font-weight:bold;margin:12px 0}
+small{color:#a7b5cc;line-height:1.6}
+.green{color:#4ade80}.amber{color:#fbbf24}
+section{margin-top:25px}
+footer{padding:25px 5%;color:#a7b5cc}
+</style>
+</head>
+<body>
+<header>
+<h1>AI Irrigation</h1>
+<p>Central Administration | GitOps | Kubernetes Security</p>
+</header>
+<main>
+<h2>Operations Overview</h2>
+<div class="grid">
+<div class="card"><small>Argo CD</small><div class="value green">Existing Setup</div><small>Previously reported Synced and Healthy. Recheck live status.</small></div>
+<div class="card"><small>Administration</small><div class="value amber">Verification Required</div><small>Confirm effective administrator permissions in Argo CD.</small></div>
+<div class="card"><small>CIS Security</small><div class="value amber">Audit Pending</div><small>Benchmark assessment and control validation required.</small></div>
+<div class="card"><small>GitOps Governance</small><div class="value">Under Review</div><small>Verify repository, synchronization and approved changes.</small></div>
+</div>
+<section class="card">
+<h2>Administrator Responsibilities</h2>
+<p>Manage application deployments, review synchronization, control authorized access, and inspect application health.</p>
+</section>
+<section class="card">
+<h2>CIS Security Checklist</h2>
+<p>? Kubernetes version and benchmark identified</p>
+<p>? RBAC and administrator access verified</p>
+<p>? Workload security and network policies audited</p>
+<p>? Audit logging and secrets management reviewed</p>
+<p>? Findings remediated and controls retested</p>
+</section>
+</main>
+<footer>Local demonstration dashboard — security and permissions must be verified against the live cluster.</footer>
+</body>
+</html>

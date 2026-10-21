@@ -1,0 +1,36 @@
+=== Kubernetes Context ===
+minikube
+
+=== Kubernetes Nodes ===
+NAME       STATUS   ROLES           AGE   VERSION   INTERNAL-IP    EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                              CONTAINER-RUNTIME
+minikube   Ready    control-plane   92m   v1.37.0   192.168.49.2   <none>        Debian GNU/Linux 12 (bookworm)   6.18.33.2-microsoft-standard-WSL2 (amd64)   containerd://2.3.4
+
+=== Argo CD Applications ===
+NAME             SYNC STATUS   HEALTH STATUS
+irrigation-app   Synced        Healthy
+
+=== Argo CD RBAC ===
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"v1","kind":"ConfigMap","metadata":{"annotations":{},"labels":{"app.kubernetes.io/name":"argocd-rbac-cm","app.kubernetes.io/part-of":"argocd"},"name":"argocd-rbac-cm","namespace":"argocd"}}
+  creationTimestamp: "2026-10-21T14:54:57Z"
+  labels:
+    app.kubernetes.io/name: argocd-rbac-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-rbac-cm
+  namespace: argocd
+  resourceVersion: "644"
+  uid: 9e379bed-8989-488d-89f2-cadf1679eed5
+
+=== Network Policies ===
+NAMESPACE   NAME                                              POD-SELECTOR                                              AGE
+argocd      argocd-application-controller-network-policy      app.kubernetes.io/name=argocd-application-controller      88m
+argocd      argocd-applicationset-controller-network-policy   app.kubernetes.io/name=argocd-applicationset-controller   88m
+argocd      argocd-dex-server-network-policy                  app.kubernetes.io/name=argocd-dex-server                  88m
+argocd      argocd-notifications-controller-network-policy    app.kubernetes.io/name=argocd-notifications-controller    88m
+argocd      argocd-redis-network-policy                       app.kubernetes.io/name=argocd-redis                       88m
+argocd      argocd-repo-server-network-policy                 app.kubernetes.io/name=argocd-repo-server                 88m
+argocd      argocd-server-network-policy                      app.kubernetes.io/name=argocd-server                      88m
