@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cis-dashboard
+  namespace: irrigation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cis-dashboard
+  template:
+    metadata:
+      labels:
+        app: cis-dashboard
+    spec:
+      containers:
+      - name: dashboard
+        image: nginx:1.27
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: dashboard-html
+          mountPath: /usr/share/nginx/html
+      volumes:
+      - name: dashboard-html
+        configMap:
+          name: cis-dashboard-html
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cis-dashboard-html
+  namespace: irrigation
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>CIS Security Dashboard</title>
+      <style>
+        body{font-family:Arial;background:#0b1220;color:white;padding:30px}
+        .card{display:inline-block;background:#172338;padding:25px;margin:10px;border-radius:12px}
+        h1{color:#60a5fa}
+      </style>
+    </head>
+    <body>
+      <h1>CIS Security Dashboard</h1>
+      <p>AI Irrigation GitOps - Kubernetes Security</p>
+      <div class="card"><h2>Security Scan</h2><p>Pending verification</p></div>
+      <div class="card"><h2>CIS Baseline</h2><p>Scan results pending</p></div>
+      <p>Dashboard demonstration. Live scanner results are not connected yet.</p>
+    </body>
+    </html>
